@@ -213,7 +213,22 @@
       :toggle (eq doom-modeline-buffer-file-name-style 'file-name))
      ("b" (setq doom-modeline-buffer-file-name-style 'buffer-name)
       "buffer name"
-      :toggle (eq doom-modeline-buffer-file-name-style 'buffer-name))))))
+      :toggle (eq doom-modeline-buffer-file-name-style 'buffer-name)))
+    "Misc"
+    (("g" (progn
+            (message "Fetching GitHub notifications...")
+            (doom-modeline--github-fetch-notifications)
+            (run-with-timer 300 nil #'doom-modeline--github-fetch-notifications)
+            (browse-url "https://github.com/notifications"))
+      "github notifications")
+     ("e" (if (bound-and-true-p flycheck-mode)
+              (flycheck-list-errors)
+            (flymake-show-diagnostics-buffer))
+      "list errors")
+     ("B" (if (bound-and-true-p grip-mode)
+              (grip-browse-preview)
+            (message "Not in preiew"))
+      "browse preivew")))))
 
 (use-package hide-mode-line
   :hook (((completion-list-mode completion-in-region-mode) . hide-mode-line-mode)))
